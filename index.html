@@ -128,12 +128,12 @@
       right: 1.25rem;
       z-index: 100;
       display: flex;
-      gap: 0.6rem;
+      gap: 0.5rem;
       align-items: center;
-      background: rgba(255, 255, 255, 0.78);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      padding: 0.4rem 0.6rem;
+      padding: 0.35rem 0.55rem;
       border-radius: var(--radius-full);
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-lg);
@@ -141,7 +141,44 @@
     }
 
     [data-theme="dark"] .top-controls {
-      background: rgba(19, 27, 46, 0.78);
+      background: rgba(19, 27, 46, 0.85);
+    }
+
+    /* Language Switcher Pill */
+    .lang-switcher {
+      display: inline-flex;
+      align-items: center;
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-full);
+      padding: 2px;
+      gap: 2px;
+    }
+
+    .lang-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .lang-btn.active {
+      background-color: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 1px 4px var(--primary-glow);
+    }
+
+    .lang-btn:hover:not(.active) {
+      color: var(--primary);
+      background-color: var(--primary-light);
     }
 
     .ctrl-btn {
@@ -171,7 +208,7 @@
       gap: 0.4rem;
       font-size: 0.85rem;
       font-weight: 600;
-      padding: 0 0.9rem;
+      padding: 0 0.85rem;
       width: auto;
       height: 36px;
       background-color: var(--primary);
@@ -282,6 +319,7 @@
       border-radius: var(--radius-full);
       backdrop-filter: blur(8px);
       margin-bottom: 1.5rem;
+      transition: var(--transition);
     }
 
     .hero-contacts {
@@ -1203,12 +1241,21 @@
 
   <!-- Floating Navigation Controls -->
   <div class="top-controls">
+    <!-- Language Switcher -->
+    <div class="lang-switcher" title="Pilih Bahasa / Choose Language">
+      <button class="lang-btn active" id="btnLangId" onclick="switchLanguage('id')">ID</button>
+      <button class="lang-btn" id="btnLangEn" onclick="switchLanguage('en')">EN</button>
+    </div>
+
+    <!-- Theme Toggle -->
     <button class="ctrl-btn" id="themeToggle" title="Ganti Mode Gelap / Terang" aria-label="Toggle Theme">
       <i class="fa-solid fa-moon" id="themeIcon"></i>
     </button>
+
+    <!-- Print PDF Button -->
     <button class="ctrl-btn ctrl-btn-text" onclick="window.print()" title="Cetak atau Simpan PDF" aria-label="Print CV">
       <i class="fa-solid fa-print"></i>
-      <span>Cetak / PDF</span>
+      <span data-i18n="ctrl_print">Cetak / PDF</span>
     </button>
   </div>
 
@@ -1218,31 +1265,31 @@
     <div class="hero-content">
       <div class="avatar-wrapper">
         <img src="foto.png" alt="Foto Shinta Lestari" class="avatar-img">
-        <span class="status-badge" title="Siap Bekerja (Open to Work)"></span>
+        <span class="status-badge" id="statusBadge" title="Siap Bekerja (Open to Work)"></span>
       </div>
 
       <h1 class="hero-name">Shinta Lestari</h1>
       <div class="hero-role">
         <i class="fa-solid fa-briefcase"></i>
-        <span>Staff Administrasi</span>
+        <span data-i18n="hero_role">Staff Administrasi</span>
       </div>
 
       <div class="hero-contacts">
         <!-- Email -->
-        <div class="contact-chip email" onclick="copyText('Shintalstari7@gmail.com', 'Alamat Email')" title="Klik untuk menyalin Email">
+        <div class="contact-chip email" id="emailChip" onclick="copyText('Shintalstari7@gmail.com', 'email')" title="Klik untuk menyalin Email">
           <i class="fa-solid fa-envelope"></i>
           <span>Shintalstari7@gmail.com</span>
           <i class="fa-regular fa-copy" style="font-size: 0.75rem; opacity: 0.7; margin-left: 2px;"></i>
         </div>
 
         <!-- WhatsApp -->
-        <a class="contact-chip whatsapp" href="https://wa.me/62895323769927" target="_blank" rel="noopener noreferrer" title="Hubungi via WhatsApp">
+        <a class="contact-chip whatsapp" href="https://wa.me/62895323769927" target="_blank" rel="noopener noreferrer" id="waChip" title="Hubungi via WhatsApp">
           <i class="fa-brands fa-whatsapp"></i>
           <span>+62 895-3237-69927</span>
         </a>
 
         <!-- LinkedIn -->
-        <a class="contact-chip linkedin" href="https://www.linkedin.com/in/shinta-lestari-4937a8265/" target="_blank" rel="noopener noreferrer" title="Buka Profil LinkedIn">
+        <a class="contact-chip linkedin" href="https://www.linkedin.com/in/shinta-lestari-4937a8265/" target="_blank" rel="noopener noreferrer" id="linkedinChip" title="Buka Profil LinkedIn">
           <i class="fa-brands fa-linkedin-in"></i>
           <span>LinkedIn Shinta Lestari</span>
           <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; opacity: 0.7;"></i>
@@ -1264,10 +1311,10 @@
             <div class="card-header-styled">
               <h2 class="section-heading">
                 <span class="heading-icon"><i class="fa-solid fa-user-tie"></i></span>
-                <span>Tentang Saya</span>
+                <span data-i18n="section_about">Tentang Saya</span>
               </h2>
             </div>
-            <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            <p data-i18n="about_content" style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0;">
               Staff Administrasi Lulusan (D3) Manajemen Bisnis. Berpengalaman sebagai Admin Collection selama 2 tahun. Memiliki pengetahuan tentang Administrasi, filling dokumen dan terampil dalam mengoperasikan Microsoft Office. Pribadi yang teliti, adaptif, komunikatif dan bertanggung jawab.
             </p>
           </section>
@@ -1277,7 +1324,7 @@
             <div class="card-header-styled">
               <h2 class="section-heading">
                 <span class="heading-icon"><i class="fa-solid fa-id-card"></i></span>
-                <span>Profil Pribadi</span>
+                <span data-i18n="section_profile">Profil Pribadi</span>
               </h2>
             </div>
             <div class="info-list">
@@ -1285,8 +1332,8 @@
               <div class="info-item">
                 <div class="info-item-icon"><i class="fa-solid fa-location-dot"></i></div>
                 <div class="info-item-content">
-                  <div class="info-label">Alamat Lengkap</div>
-                  <div class="info-value">
+                  <div class="info-label" data-i18n="lbl_address">Alamat Lengkap</div>
+                  <div class="info-value" data-i18n="val_address">
                     Jl. Mayjen Ishak Djuarsa, Gg Mesjid 1 Loji, Kelurahan Loji, Kecamatan Bogor Barat, Kota Bogor, Jawa Barat, Indonesia.
                   </div>
                 </div>
@@ -1296,8 +1343,8 @@
               <div class="info-item">
                 <div class="info-item-icon"><i class="fa-solid fa-cake-candles"></i></div>
                 <div class="info-item-content">
-                  <div class="info-label">Tempat & Tanggal Lahir</div>
-                  <div class="info-value">Bogor, Indonesia • 7 Februari 1994</div>
+                  <div class="info-label" data-i18n="lbl_birth">Tempat & Tanggal Lahir</div>
+                  <div class="info-value" data-i18n="val_birth">Bogor, Indonesia • 7 Februari 1994</div>
                 </div>
               </div>
 
@@ -1305,7 +1352,7 @@
               <div class="info-item">
                 <div class="info-item-icon"><i class="fa-solid fa-ruler-vertical"></i></div>
                 <div class="info-item-content">
-                  <div class="info-label">Tinggi & Berat Badan</div>
+                  <div class="info-label" data-i18n="lbl_physique">Tinggi & Berat Badan</div>
                   <div class="info-value">147 cm | 45 kg</div>
                 </div>
               </div>
@@ -1314,8 +1361,8 @@
               <div class="info-item">
                 <div class="info-item-icon"><i class="fa-solid fa-user-check"></i></div>
                 <div class="info-item-content">
-                  <div class="info-label">Status Pernikahan</div>
-                  <div class="info-value">Single</div>
+                  <div class="info-label" data-i18n="lbl_status">Status Pernikahan</div>
+                  <div class="info-value" data-i18n="val_status">Single</div>
                 </div>
               </div>
 
@@ -1323,7 +1370,7 @@
               <div class="info-item">
                 <div class="info-item-icon"><i class="fa-solid fa-map-pin"></i></div>
                 <div class="info-item-content">
-                  <div class="info-label">Kode Pos</div>
+                  <div class="info-label" data-i18n="lbl_postal">Kode Pos</div>
                   <div class="info-value">16117</div>
                 </div>
               </div>
@@ -1335,30 +1382,30 @@
             <div class="card-header-styled">
               <h2 class="section-heading">
                 <span class="heading-icon"><i class="fa-solid fa-toolbox"></i></span>
-                <span>Keahlian</span>
+                <span data-i18n="section_skills">Keahlian</span>
               </h2>
             </div>
 
             <div style="margin-bottom: 1.25rem;">
-              <div class="info-label" style="margin-bottom: 0.6rem;">Keahlian Teknis</div>
+              <div class="info-label" data-i18n="lbl_tech_skills" style="margin-bottom: 0.6rem;">Keahlian Teknis</div>
               <div class="skills-wrapper">
                 <span class="skill-tag tech"><i class="fa-brands fa-microsoft"></i> Ms Word</span>
                 <span class="skill-tag tech"><i class="fa-solid fa-file-excel"></i> Ms Excel</span>
                 <span class="skill-tag tech"><i class="fa-solid fa-file-powerpoint"></i> Ms Power Point</span>
-                <span class="skill-tag tech"><i class="fa-solid fa-folder-tree"></i> Filling Dokumen</span>
-                <span class="skill-tag tech"><i class="fa-solid fa-file-lines"></i> Membuat Laporan Kronologi</span>
+                <span class="skill-tag tech"><i class="fa-solid fa-folder-tree"></i> <span data-i18n="skill_filing">Filling Dokumen</span></span>
+                <span class="skill-tag tech"><i class="fa-solid fa-file-lines"></i> <span data-i18n="skill_chrono">Membuat Laporan Kronologi</span></span>
               </div>
             </div>
 
             <div>
-              <div class="info-label" style="margin-bottom: 0.6rem;">Keahlian Non-Teknis</div>
+              <div class="info-label" data-i18n="lbl_soft_skills" style="margin-bottom: 0.6rem;">Keahlian Non-Teknis</div>
               <div class="skills-wrapper">
-                <span class="skill-tag"><i class="fa-solid fa-check"></i> Adaptif</span>
-                <span class="skill-tag"><i class="fa-solid fa-check"></i> Komunikatif</span>
-                <span class="skill-tag"><i class="fa-solid fa-check"></i> Kerjasama Tim</span>
-                <span class="skill-tag"><i class="fa-solid fa-check"></i> Pemecahan Masalah</span>
-                <span class="skill-tag"><i class="fa-solid fa-check"></i> Teliti</span>
-                <span class="skill-tag"><i class="fa-solid fa-check"></i> Bertanggung Jawab</span>
+                <span class="skill-tag"><i class="fa-solid fa-check"></i> <span data-i18n="skill_adapt">Adaptif</span></span>
+                <span class="skill-tag"><i class="fa-solid fa-check"></i> <span data-i18n="skill_comm">Komunikatif</span></span>
+                <span class="skill-tag"><i class="fa-solid fa-check"></i> <span data-i18n="skill_team">Kerjasama Tim</span></span>
+                <span class="skill-tag"><i class="fa-solid fa-check"></i> <span data-i18n="skill_problem">Pemecahan Masalah</span></span>
+                <span class="skill-tag"><i class="fa-solid fa-check"></i> <span data-i18n="skill_detail">Teliti</span></span>
+                <span class="skill-tag"><i class="fa-solid fa-check"></i> <span data-i18n="skill_resp">Bertanggung Jawab</span></span>
               </div>
             </div>
           </section>
@@ -1368,17 +1415,17 @@
             <div class="card-header-styled">
               <h2 class="section-heading">
                 <span class="heading-icon"><i class="fa-solid fa-language"></i></span>
-                <span>Bahasa</span>
+                <span data-i18n="section_lang">Bahasa</span>
               </h2>
             </div>
             <div class="language-list">
               <div class="language-row">
-                <span class="lang-name"><i class="fa-solid fa-globe" style="color: var(--primary);"></i> Bahasa Indonesia</span>
-                <span class="lang-status active">Aktif</span>
+                <span class="lang-name"><i class="fa-solid fa-globe" style="color: var(--primary);"></i> <span data-i18n="lang_id">Bahasa Indonesia</span></span>
+                <span class="lang-status active" data-i18n="lang_id_status">Aktif</span>
               </div>
               <div class="language-row">
-                <span class="lang-name"><i class="fa-solid fa-globe" style="color: var(--accent);"></i> Bahasa Inggris</span>
-                <span class="lang-status passive">Pasif</span>
+                <span class="lang-name"><i class="fa-solid fa-globe" style="color: var(--accent);"></i> <span data-i18n="lang_en">Bahasa Inggris</span></span>
+                <span class="lang-status passive" data-i18n="lang_en_status">Pasif</span>
               </div>
             </div>
           </section>
@@ -1394,7 +1441,7 @@
           <div class="card-header-styled">
             <h2 class="section-heading">
               <span class="heading-icon"><i class="fa-solid fa-briefcase"></i></span>
-              <span>Pengalaman Kerja</span>
+              <span data-i18n="section_exp">Pengalaman Kerja</span>
             </h2>
           </div>
 
@@ -1405,25 +1452,25 @@
               <div class="timeline-dot"></div>
               <div class="timeline-card">
                 <div class="role-title">
-                  <span>Admin Sales</span>
+                  <span data-i18n="exp1_role">Admin Sales</span>
                   <span style="color: var(--text-muted); font-weight: 400;">–</span>
                   <span class="company-name">Inovasia Digital Academy</span>
-                  <span class="current-badge">Terbaru</span>
+                  <span class="current-badge" data-i18n="badge_latest">Terbaru</span>
                 </div>
                 <div class="date-badge">
                   <i class="fa-regular fa-calendar-days"></i>
-                  <span>Agustus 2025 – Sekarang</span>
+                  <span data-i18n="exp1_date">Agustus 2025 – Sekarang</span>
                 </div>
                 <ul class="timeline-list">
-                  <li>Menyusun dan menyiapkan proposal penawaran layanan software house sesuai kebutuhan calon klien.</li>
-                  <li>Mengelola administrasi dan melakukan sales follow-up kepada leads hingga tahap penawaran dan kerja sama.</li>
-                  <li>Menangani administrasi serta pemasaran program Ngoding Pakai AI, kursus pemrograman berbasis Artificial Intelligence (AI).</li>
-                  <li>Mengelola komunikasi dengan leads dan peserta, termasuk memberikan informasi program, jadwal, harga, dan proses pendaftaran.</li>
-                  <li>Mengatur jadwal kelas private serta melakukan koordinasi antara peserta dan mentor.</li>
-                  <li>Mengelola administrasi peserta, meliputi pendataan, jadwal pembelajaran, dan kebutuhan kelas.</li>
-                  <li>Membuat serta mengelola konten promosi untuk mendukung pemasaran melalui media sosial.</li>
-                  <li>Mendukung proses content administration, mulai dari perencanaan, penyusunan informasi, hingga publikasi konten.</li>
-                  <li>Mendukung operasional dan pemasaran berbagai program, seperti workshop, kelas online, kelas private, dan in-house training.</li>
+                  <li data-i18n="exp1_p1">Menyusun dan menyiapkan proposal penawaran layanan software house sesuai kebutuhan calon klien.</li>
+                  <li data-i18n="exp1_p2">Mengelola administrasi dan melakukan sales follow-up kepada leads hingga tahap penawaran dan kerja sama.</li>
+                  <li data-i18n="exp1_p3">Menangani administrasi serta pemasaran program Ngoding Pakai AI, kursus pemrograman berbasis Artificial Intelligence (AI).</li>
+                  <li data-i18n="exp1_p4">Mengelola komunikasi dengan leads dan peserta, termasuk memberikan informasi program, jadwal, harga, dan proses pendaftaran.</li>
+                  <li data-i18n="exp1_p5">Mengatur jadwal kelas private serta melakukan koordinasi antara peserta dan mentor.</li>
+                  <li data-i18n="exp1_p6">Mengelola administrasi peserta, meliputi pendataan, jadwal pembelajaran, dan kebutuhan kelas.</li>
+                  <li data-i18n="exp1_p7">Membuat serta mengelola konten promosi untuk mendukung pemasaran melalui media sosial.</li>
+                  <li data-i18n="exp1_p8">Mendukung proses content administration, mulai dari perencanaan, penyusunan informasi, hingga publikasi konten.</li>
+                  <li data-i18n="exp1_p9">Mendukung operasional dan pemasaran berbagai program, seperti workshop, kelas online, kelas private, dan in-house training.</li>
                 </ul>
               </div>
             </div>
@@ -1433,19 +1480,19 @@
               <div class="timeline-dot"></div>
               <div class="timeline-card">
                 <div class="role-title">
-                  <span>Admin Finance</span>
+                  <span data-i18n="exp2_role">Admin Finance</span>
                   <span style="color: var(--text-muted); font-weight: 400;">–</span>
                   <span class="company-name">Bali Smart Laundry</span>
                 </div>
                 <div class="date-badge">
                   <i class="fa-regular fa-calendar-days"></i>
-                  <span>Desember 2023 – Maret 2024</span>
+                  <span data-i18n="exp2_date">Desember 2023 – Maret 2024</span>
                 </div>
                 <ul class="timeline-list">
-                  <li>Membuat Bill perhotel setiap harinya.</li>
-                  <li>Merapihkan Bill yang sudah diparaf oleh pihak hotel.</li>
-                  <li>Membuat Invoice dan Kwitansi setiap akhir bulan untuk ditagih ke pihak hotel.</li>
-                  <li>Memegang uang kas kecil jika akunting libur.</li>
+                  <li data-i18n="exp2_p1">Membuat Bill perhotel setiap harinya.</li>
+                  <li data-i18n="exp2_p2">Merapihkan Bill yang sudah diparaf oleh pihak hotel.</li>
+                  <li data-i18n="exp2_p3">Membuat Invoice dan Kwitansi setiap akhir bulan untuk ditagih ke pihak hotel.</li>
+                  <li data-i18n="exp2_p4">Memegang uang kas kecil jika akunting libur.</li>
                 </ul>
               </div>
             </div>
@@ -1455,23 +1502,23 @@
               <div class="timeline-dot"></div>
               <div class="timeline-card">
                 <div class="role-title">
-                  <span>Admin Inventory</span>
+                  <span data-i18n="exp3_role">Admin Inventory</span>
                   <span style="color: var(--text-muted); font-weight: 400;">–</span>
                   <span class="company-name">PT Badger Sukses Jaya</span>
                 </div>
                 <div class="date-badge">
                   <i class="fa-regular fa-calendar-days"></i>
-                  <span>Juli 2023 – November 2023</span>
+                  <span data-i18n="exp3_date">Juli 2023 – November 2023</span>
                 </div>
                 <ul class="timeline-list">
-                  <li>Input FPP (Form penjualan suku cadang).</li>
-                  <li>Membuat FPP untuk kunjungan yang akan dikunjungi oleh teknisi.</li>
-                  <li>Mengecek jadwal kunjungan teknisi.</li>
-                  <li>Membuat Invoice.</li>
-                  <li>Registrasi Tanda Terima Barang.</li>
-                  <li>Reconsil barang In and Out.</li>
-                  <li>Membuat Work Order.</li>
-                  <li>Input pembayaran by Accurate.</li>
+                  <li data-i18n="exp3_p1">Input FPP (Form penjualan suku cadang).</li>
+                  <li data-i18n="exp3_p2">Membuat FPP untuk kunjungan yang akan dikunjungi oleh teknisi.</li>
+                  <li data-i18n="exp3_p3">Mengecek jadwal kunjungan teknisi.</li>
+                  <li data-i18n="exp3_p4">Membuat Invoice.</li>
+                  <li data-i18n="exp3_p5">Registrasi Tanda Terima Barang.</li>
+                  <li data-i18n="exp3_p6">Reconsil barang In and Out.</li>
+                  <li data-i18n="exp3_p7">Membuat Work Order.</li>
+                  <li data-i18n="exp3_p8">Input pembayaran by Accurate.</li>
                 </ul>
               </div>
             </div>
@@ -1481,19 +1528,19 @@
               <div class="timeline-dot"></div>
               <div class="timeline-card">
                 <div class="role-title">
-                  <span>Admin Account Solution</span>
+                  <span data-i18n="exp4_role">Admin Account Solution</span>
                   <span style="color: var(--text-muted); font-weight: 400;">–</span>
                   <span class="company-name">PT BCA Finance</span>
                 </div>
                 <div class="date-badge">
                   <i class="fa-regular fa-calendar-days"></i>
-                  <span>Juli 2018 – Juni 2019</span>
+                  <span data-i18n="exp4_date">Juli 2018 – Juni 2019</span>
                 </div>
                 <ul class="timeline-list">
-                  <li>Mengecek pencairan-pencairan fee profcoll.</li>
-                  <li>Registrasi Tanda Terima Sementara.</li>
-                  <li>Registrasi Berita Acara Serah Terima.</li>
-                  <li>Input data absensi karyawan melalui aplikasi HRIS.</li>
+                  <li data-i18n="exp4_p1">Mengecek pencairan-pencairan fee profcoll.</li>
+                  <li data-i18n="exp4_p2">Registrasi Tanda Terima Sementara.</li>
+                  <li data-i18n="exp4_p3">Registrasi Berita Acara Serah Terima.</li>
+                  <li data-i18n="exp4_p4">Input data absensi karyawan melalui aplikasi HRIS.</li>
                 </ul>
               </div>
             </div>
@@ -1503,20 +1550,20 @@
               <div class="timeline-dot"></div>
               <div class="timeline-card">
                 <div class="role-title">
-                  <span>Admin Collection</span>
+                  <span data-i18n="exp5_role">Admin Collection</span>
                   <span style="color: var(--text-muted); font-weight: 400;">–</span>
                   <span class="company-name">Master Electronic & Furniture</span>
                 </div>
                 <div class="date-badge">
                   <i class="fa-regular fa-calendar-days"></i>
-                  <span>Agustus 2013 – Agustus 2014</span>
+                  <span data-i18n="exp5_date">Agustus 2013 – Agustus 2014</span>
                 </div>
                 <ul class="timeline-list">
-                  <li>Mengecek harga dari MAP sales yang akan dipesan oleh konsumen.</li>
-                  <li>Membuat kwitansi untuk para kolektor agar ditagih kepada konsumen.</li>
-                  <li>Input data pembayaran konsumen.</li>
-                  <li>Mengarsipkan dokumen.</li>
-                  <li>Turun kelapangan untuk penagihan kepada konsumen yang kurang lancar pembayarannya.</li>
+                  <li data-i18n="exp5_p1">Mengecek harga dari MAP sales yang akan dipesan oleh konsumen.</li>
+                  <li data-i18n="exp5_p2">Membuat kwitansi untuk para kolektor agar ditagih kepada konsumen.</li>
+                  <li data-i18n="exp5_p3">Input data pembayaran konsumen.</li>
+                  <li data-i18n="exp5_p4">Mengarsipkan dokumen.</li>
+                  <li data-i18n="exp5_p5">Turun kelapangan untuk penagihan kepada konsumen yang kurang lancar pembayarannya.</li>
                 </ul>
               </div>
             </div>
@@ -1532,21 +1579,21 @@
             <div class="card-header-styled">
               <h2 class="section-heading">
                 <span class="heading-icon"><i class="fa-solid fa-handshake"></i></span>
-                <span>Freelance</span>
+                <span data-i18n="section_freelance">Freelance</span>
               </h2>
             </div>
             <div class="timeline-card">
               <div class="role-title">
-                <span>Staff Warung Makan</span>
+                <span data-i18n="free_role">Staff Warung Makan</span>
               </div>
               <div class="company-name" style="font-size: 0.95rem; margin-bottom: 0.2rem;">Kedai Gumetap Bogor</div>
               <div class="date-badge">
                 <i class="fa-regular fa-calendar-days"></i>
-                <span>Agustus 2021 – Sekarang</span>
+                <span data-i18n="free_date">Agustus 2021 – Sekarang</span>
               </div>
               <ul class="timeline-list">
-                <li>Melayani pembeli baik offline maupun online.</li>
-                <li>Mencatat alat makan & bahan-bahan yang sudah habis.</li>
+                <li data-i18n="free_p1">Melayani pembeli baik offline maupun online.</li>
+                <li data-i18n="free_p2">Mencatat alat makan & bahan-bahan yang sudah habis.</li>
               </ul>
             </div>
           </section>
@@ -1556,23 +1603,23 @@
             <div class="card-header-styled">
               <h2 class="section-heading">
                 <span class="heading-icon"><i class="fa-solid fa-graduation-cap"></i></span>
-                <span>Magang</span>
+                <span data-i18n="section_intern">Magang</span>
               </h2>
             </div>
             <div class="timeline-card">
               <div class="role-title">
-                <span>Staff Bidang Data</span>
+                <span data-i18n="intern_role">Staff Bidang Data</span>
               </div>
               <div class="company-name" style="font-size: 0.95rem; margin-bottom: 0.2rem;">Dinas Sosial Kota Bogor</div>
               <div class="date-badge">
                 <i class="fa-regular fa-calendar-days"></i>
-                <span>Maret 2017 – Mei 2017</span>
+                <span data-i18n="intern_date">Maret 2017 – Mei 2017</span>
               </div>
               <ul class="timeline-list">
-                <li>Mengecek Data Kartu Indonesia Sehat (KIS) APBD-PBI yang sudah tidak aktif.</li>
-                <li>Input data Kartu Indonesia Sehat (KIS) APBD-PBI yang baru dicetak.</li>
-                <li>Membuat surat rekomendasi untuk KIS yang akan dibuat BPJS.</li>
-                <li>Melakukan pendataan terhadap pengamen dan gelandangan.</li>
+                <li data-i18n="intern_p1">Mengecek Data Kartu Indonesia Sehat (KIS) APBD-PBI yang sudah tidak aktif.</li>
+                <li data-i18n="intern_p2">Input data Kartu Indonesia Sehat (KIS) APBD-PBI yang baru dicetak.</li>
+                <li data-i18n="intern_p3">Membuat surat rekomendasi untuk KIS yang akan dibuat BPJS.</li>
+                <li data-i18n="intern_p4">Melakukan pendataan terhadap pengamen dan gelandangan.</li>
               </ul>
             </div>
           </section>
@@ -1584,7 +1631,7 @@
           <div class="card-header-styled">
             <h2 class="section-heading">
               <span class="heading-icon"><i class="fa-solid fa-school"></i></span>
-              <span>Pendidikan</span>
+              <span data-i18n="section_edu">Pendidikan</span>
             </h2>
           </div>
           <div class="edu-box">
@@ -1592,8 +1639,8 @@
               <i class="fa-solid fa-graduation-cap"></i>
             </div>
             <div class="edu-details">
-              <div class="edu-degree">D3 Jurusan Manajemen Bisnis</div>
-              <div class="edu-institution">Akademi Telekomunikasi Bogor</div>
+              <div class="edu-degree" data-i18n="edu_degree">D3 Jurusan Manajemen Bisnis</div>
+              <div class="edu-institution" data-i18n="edu_institution">Akademi Telekomunikasi Bogor</div>
               <span class="edu-year">2014 – 2017</span>
             </div>
           </div>
@@ -1604,17 +1651,17 @@
           <div class="card-header-styled">
             <h2 class="section-heading">
               <span class="heading-icon"><i class="fa-solid fa-certificate"></i></span>
-              <span>Sertifikasi & Pelatihan</span>
+              <span data-i18n="section_certs">Sertifikasi & Pelatihan</span>
             </h2>
           </div>
 
           <!-- Category Filter Tabs -->
           <div class="cert-controls">
-            <button class="cert-filter-btn active" data-filter="all">Semua (11)</button>
-            <button class="cert-filter-btn" data-filter="excel">Microsoft Excel (3)</button>
-            <button class="cert-filter-btn" data-filter="qa">Quality Assurance (3)</button>
-            <button class="cert-filter-btn" data-filter="lang">Bahasa Inggris (4)</button>
-            <button class="cert-filter-btn" data-filter="other">Lainnya (1)</button>
+            <button class="cert-filter-btn active" data-filter="all" data-i18n="filter_all">Semua (11)</button>
+            <button class="cert-filter-btn" data-filter="excel" data-i18n="filter_excel">Microsoft Excel (3)</button>
+            <button class="cert-filter-btn" data-filter="qa" data-i18n="filter_qa">Quality Assurance (3)</button>
+            <button class="cert-filter-btn" data-filter="lang" data-i18n="filter_lang">Bahasa Inggris (4)</button>
+            <button class="cert-filter-btn" data-filter="other" data-i18n="filter_other">Lainnya (1)</button>
           </div>
 
           <!-- Certificate Grid -->
@@ -1628,7 +1675,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2017</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1640,7 +1687,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2023</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1652,7 +1699,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2024</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1664,7 +1711,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2024</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1676,7 +1723,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2024</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1688,7 +1735,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2025</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1700,7 +1747,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2025</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1712,7 +1759,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2025</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1724,7 +1771,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2025</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1736,7 +1783,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2025</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1748,7 +1795,7 @@
               </div>
               <div class="cert-footer">
                 <span class="cert-year">2025</span>
-                <span>Lihat Sertifikat <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                <span><span class="cert-view-text" data-i18n="cert_view">Lihat Sertifikat</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
               </div>
             </a>
 
@@ -1767,11 +1814,309 @@
 
   <!-- Footer -->
   <footer>
-    <p>© 2026 Shinta Lestari • Curriculum Vitae Profesional</p>
+    <p id="footerText">© 2026 Shinta Lestari • Curriculum Vitae Profesional</p>
   </footer>
 
   <!-- Scripts -->
   <script>
+    // Internationalization (i18n) Translations Dictionary
+    const translations = {
+      id: {
+        page_title: "Curriculum Vitae – Shinta Lestari",
+        page_desc: "Curriculum Vitae Profesional Shinta Lestari - Staff Administrasi berpengalaman di bidang Administrasi, Sales Support, Finance, dan Inventory.",
+        ctrl_print: "Cetak / PDF",
+        ctrl_theme_title: "Ganti Mode Gelap / Terang",
+        badge_status: "Siap Bekerja (Open to Work)",
+        hero_role: "Staff Administrasi",
+        tip_email: "Klik untuk menyalin Email",
+        tip_wa: "Hubungi via WhatsApp",
+        tip_linkedin: "Buka Profil LinkedIn",
+        
+        section_about: "Tentang Saya",
+        about_content: "Staff Administrasi Lulusan (D3) Manajemen Bisnis. Berpengalaman sebagai Admin Collection selama 2 tahun. Memiliki pengetahuan tentang Administrasi, filling dokumen dan terampil dalam mengoperasikan Microsoft Office. Pribadi yang teliti, adaptif, komunikatif dan bertanggung jawab.",
+        
+        section_profile: "Profil Pribadi",
+        lbl_address: "Alamat Lengkap",
+        val_address: "Jl. Mayjen Ishak Djuarsa, Gg Mesjid 1 Loji, Kelurahan Loji, Kecamatan Bogor Barat, Kota Bogor, Jawa Barat, Indonesia.",
+        lbl_birth: "Tempat & Tanggal Lahir",
+        val_birth: "Bogor, Indonesia • 7 Februari 1994",
+        lbl_physique: "Tinggi & Berat Badan",
+        lbl_status: "Status Pernikahan",
+        val_status: "Single",
+        lbl_postal: "Kode Pos",
+        
+        section_skills: "Keahlian",
+        lbl_tech_skills: "Keahlian Teknis",
+        skill_filing: "Filling Dokumen",
+        skill_chrono: "Membuat Laporan Kronologi",
+        lbl_soft_skills: "Keahlian Non-Teknis",
+        skill_adapt: "Adaptif",
+        skill_comm: "Komunikatif",
+        skill_team: "Kerjasama Tim",
+        skill_problem: "Pemecahan Masalah",
+        skill_detail: "Teliti",
+        skill_resp: "Bertanggung Jawab",
+        
+        section_lang: "Bahasa",
+        lang_id: "Bahasa Indonesia",
+        lang_id_status: "Aktif",
+        lang_en: "Bahasa Inggris",
+        lang_en_status: "Pasif",
+        
+        section_exp: "Pengalaman Kerja",
+        badge_latest: "Terbaru",
+        
+        // Inovasia
+        exp1_role: "Admin Sales",
+        exp1_date: "Agustus 2025 – Sekarang",
+        exp1_p1: "Menyusun dan menyiapkan proposal penawaran layanan software house sesuai kebutuhan calon klien.",
+        exp1_p2: "Mengelola administrasi dan melakukan sales follow-up kepada leads hingga tahap penawaran dan kerja sama.",
+        exp1_p3: "Menangani administrasi serta pemasaran program Ngoding Pakai AI, kursus pemrograman berbasis Artificial Intelligence (AI).",
+        exp1_p4: "Mengelola komunikasi dengan leads dan peserta, termasuk memberikan informasi program, jadwal, harga, dan proses pendaftaran.",
+        exp1_p5: "Mengatur jadwal kelas private serta melakukan koordinasi antara peserta dan mentor.",
+        exp1_p6: "Mengelola administrasi peserta, meliputi pendataan, jadwal pembelajaran, dan kebutuhan kelas.",
+        exp1_p7: "Membuat serta mengelola konten promosi untuk mendukung pemasaran melalui media sosial.",
+        exp1_p8: "Mendukung proses content administration, mulai dari perencanaan, penyusunan informasi, hingga publikasi konten.",
+        exp1_p9: "Mendukung operasional dan pemasaran berbagai program, seperti workshop, kelas online, kelas private, dan in-house training.",
+        
+        // Bali Smart Laundry
+        exp2_role: "Admin Finance",
+        exp2_date: "Desember 2023 – Maret 2024",
+        exp2_p1: "Membuat Bill perhotel setiap harinya.",
+        exp2_p2: "Merapihkan Bill yang sudah diparaf oleh pihak hotel.",
+        exp2_p3: "Membuat Invoice dan Kwitansi setiap akhir bulan untuk ditagih ke pihak hotel.",
+        exp2_p4: "Memegang uang kas kecil jika akunting libur.",
+        
+        // PT Badger Sukses Jaya
+        exp3_role: "Admin Inventory",
+        exp3_date: "Juli 2023 – November 2023",
+        exp3_p1: "Input FPP (Form penjualan suku cadang).",
+        exp3_p2: "Membuat FPP untuk kunjungan yang akan dikunjungi oleh teknisi.",
+        exp3_p3: "Mengecek jadwal kunjungan teknisi.",
+        exp3_p4: "Membuat Invoice.",
+        exp3_p5: "Registrasi Tanda Terima Barang.",
+        exp3_p6: "Reconsil barang In and Out.",
+        exp3_p7: "Membuat Work Order.",
+        exp3_p8: "Input pembayaran by Accurate.",
+        
+        // PT BCA Finance
+        exp4_role: "Admin Account Solution",
+        exp4_date: "Juli 2018 – Juni 2019",
+        exp4_p1: "Mengecek pencairan-pencairan fee profcoll.",
+        exp4_p2: "Registrasi Tanda Terima Sementara.",
+        exp4_p3: "Registrasi Berita Acara Serah Terima.",
+        exp4_p4: "Input data absensi karyawan melalui aplikasi HRIS.",
+        
+        // Master Electronic & Furniture
+        exp5_role: "Admin Collection",
+        exp5_date: "Agustus 2013 – Agustus 2014",
+        exp5_p1: "Mengecek harga dari MAP sales yang akan dipesan oleh konsumen.",
+        exp5_p2: "Membuat kwitansi untuk para kolektor agar ditagih kepada konsumen.",
+        exp5_p3: "Input data pembayaran konsumen.",
+        exp5_p4: "Mengarsipkan dokumen.",
+        exp5_p5: "Turun kelapangan untuk penagihan kepada konsumen yang kurang lancar pembayarannya.",
+        
+        // Freelance & Intern
+        section_freelance: "Freelance",
+        free_role: "Staff Warung Makan",
+        free_date: "Agustus 2021 – Sekarang",
+        free_p1: "Melayani pembeli baik offline maupun online.",
+        free_p2: "Mencatat alat makan & bahan-bahan yang sudah habis.",
+        
+        section_intern: "Magang",
+        intern_role: "Staff Bidang Data",
+        intern_date: "Maret 2017 – Mei 2017",
+        intern_p1: "Mengecek Data Kartu Indonesia Sehat (KIS) APBD-PBI yang sudah tidak aktif.",
+        intern_p2: "Input data Kartu Indonesia Sehat (KIS) APBD-PBI yang baru dicetak.",
+        intern_p3: "Membuat surat rekomendasi untuk KIS yang akan dibuat BPJS.",
+        intern_p4: "Melakukan pendataan terhadap pengamen dan gelandangan.",
+        
+        // Education
+        section_edu: "Pendidikan",
+        edu_degree: "D3 Jurusan Manajemen Bisnis",
+        edu_institution: "Akademi Telekomunikasi Bogor",
+        
+        // Certs
+        section_certs: "Sertifikasi & Pelatihan",
+        filter_all: "Semua (11)",
+        filter_excel: "Microsoft Excel (3)",
+        filter_qa: "Quality Assurance (3)",
+        filter_lang: "Bahasa Inggris (4)",
+        filter_other: "Lainnya (1)",
+        cert_view: "Lihat Sertifikat",
+        
+        toast_copy_success: "Alamat email berhasil disalin ke clipboard!",
+        toast_copy_failed: "Gagal menyalin email",
+        footer_text: "© 2026 Shinta Lestari • Curriculum Vitae Profesional"
+      },
+      en: {
+        page_title: "Curriculum Vitae – Shinta Lestari",
+        page_desc: "Professional Curriculum Vitae of Shinta Lestari - Experienced Administrative Staff in Administration, Sales Support, Finance, and Inventory.",
+        ctrl_print: "Print / PDF",
+        ctrl_theme_title: "Toggle Dark / Light Mode",
+        badge_status: "Open to Work",
+        hero_role: "Administrative Staff",
+        tip_email: "Click to copy Email",
+        tip_wa: "Contact via WhatsApp",
+        tip_linkedin: "View LinkedIn Profile",
+        
+        section_about: "About Me",
+        about_content: "Business Management (Diploma 3) graduate with experience as an Administrative Staff and Admin Collection for 2 years. Possesses strong knowledge of office administration, document filing, and proficiency in Microsoft Office. A meticulous, adaptable, communicative, and responsible professional.",
+        
+        section_profile: "Personal Profile",
+        lbl_address: "Full Address",
+        val_address: "Jl. Mayjen Ishak Djuarsa, Gg Mesjid 1 Loji, Loji Sub-district, West Bogor District, Bogor City, West Java, Indonesia.",
+        lbl_birth: "Place & Date of Birth",
+        val_birth: "Bogor, Indonesia • February 7, 1994",
+        lbl_physique: "Height & Weight",
+        lbl_status: "Marital Status",
+        val_status: "Single",
+        lbl_postal: "Postal Code",
+        
+        section_skills: "Skills",
+        lbl_tech_skills: "Technical Skills",
+        skill_filing: "Document Filing",
+        skill_chrono: "Chronological Reporting",
+        lbl_soft_skills: "Soft Skills",
+        skill_adapt: "Adaptable",
+        skill_comm: "Communicative",
+        skill_team: "Teamwork",
+        skill_problem: "Problem Solving",
+        skill_detail: "Detail-Oriented",
+        skill_resp: "Responsible",
+        
+        section_lang: "Languages",
+        lang_id: "Indonesian",
+        lang_id_status: "Native / Fluent",
+        lang_en: "English",
+        lang_en_status: "Intermediate",
+        
+        section_exp: "Work Experience",
+        badge_latest: "Present",
+        
+        // Inovasia
+        exp1_role: "Admin Sales",
+        exp1_date: "August 2025 – Present",
+        exp1_p1: "Prepared and drafted service proposal offerings for software house solutions tailored to prospective clients' needs.",
+        exp1_p2: "Managed sales administration and performed lead follow-ups up to proposal closing and partnership agreements.",
+        exp1_p3: "Handled administration and marketing for 'Ngoding Pakai AI', an AI-based programming course program.",
+        exp1_p4: "Managed communications with leads and participants, providing program information, schedules, pricing, and registration details.",
+        exp1_p5: "Coordinated private class schedules and facilitated seamless scheduling between students and mentors.",
+        exp1_p6: "Managed student administration, including registration data records, learning schedules, and class requirements.",
+        exp1_p7: "Created and managed promotional content to support marketing campaigns across social media channels.",
+        exp1_p8: "Supported the content administration workflow from planning and compiling info to content publishing.",
+        exp1_p9: "Supported operational and promotional activities for workshops, online classes, private classes, and in-house trainings.",
+        
+        // Bali Smart Laundry
+        exp2_role: "Admin Finance",
+        exp2_date: "December 2023 – March 2024",
+        exp2_p1: "Prepared daily hotel laundry billing statements.",
+        exp2_p2: "Organized and archived billing documents signed and approved by client hotels.",
+        exp2_p3: "Generated monthly invoices and receipts for hotel billing at the end of each month.",
+        exp2_p4: "Managed petty cash funds during accounting staff leaves.",
+        
+        // PT Badger Sukses Jaya
+        exp3_role: "Admin Inventory",
+        exp3_date: "July 2023 – November 2023",
+        exp3_p1: "Inputted spare part sales order forms (FPP).",
+        exp3_p2: "Created service visit forms (FPP) for upcoming technician field visits.",
+        exp3_p3: "Monitored and checked technician visit schedules.",
+        exp3_p4: "Generated sales and service invoices.",
+        exp3_p5: "Registered and documented goods receipt documentation.",
+        exp3_p6: "Reconciled inbound and outbound inventory movements.",
+        exp3_p7: "Created and tracked work orders.",
+        exp3_p8: "Processed payment entries into the Accurate accounting system.",
+        
+        // PT BCA Finance
+        exp4_role: "Admin Account Solution",
+        exp4_date: "July 2018 – June 2019",
+        exp4_p1: "Verified and processed professional collection fee disbursements.",
+        exp4_p2: "Registered temporary receipts.",
+        exp4_p3: "Registered and filed official handover reports (BAST).",
+        exp4_p4: "Inputted employee attendance and leave data via the HRIS application.",
+        
+        // Master Electronic & Furniture
+        exp5_role: "Admin Collection",
+        exp5_date: "August 2013 – August 2014",
+        exp5_p1: "Verified product pricing from the MAP sales system for customer orders.",
+        exp5_p2: "Issued billing receipts for collection officers to collect customer payments.",
+        exp5_p3: "Inputted and updated customer payment records.",
+        exp5_p4: "Managed and archived physical and digital document records.",
+        exp5_p5: "Conducted field visits for payment collection follow-ups with overdue accounts.",
+        
+        // Freelance & Intern
+        section_freelance: "Freelance Experience",
+        free_role: "Food Stall Staff",
+        free_date: "August 2021 – Present",
+        free_p1: "Served dine-in, takeaway, and online delivery customers.",
+        free_p2: "Monitored and recorded depleted tableware, utensils, and culinary ingredients.",
+        
+        section_intern: "Internship Experience",
+        intern_role: "Data Division Staff",
+        intern_date: "March 2017 – May 2017",
+        intern_p1: "Audited and verified inactive regional healthcare assistance (KIS APBD-PBI) data.",
+        intern_p2: "Inputted new data records for freshly printed Kartu Indonesia Sehat (KIS) cards.",
+        intern_p3: "Drafted official recommendation letters for KIS cardholders transitioning to BPJS.",
+        intern_p4: "Conducted data surveying and collection for street performers and homeless individuals.",
+        
+        // Education
+        section_edu: "Education",
+        edu_degree: "Associate Degree (D3) in Business Management",
+        edu_institution: "Akademi Telekomunikasi Bogor",
+        
+        // Certs
+        section_certs: "Certifications & Training",
+        filter_all: "All (11)",
+        filter_excel: "Microsoft Excel (3)",
+        filter_qa: "Quality Assurance (3)",
+        filter_lang: "English (4)",
+        filter_other: "Others (1)",
+        cert_view: "View Certificate",
+        
+        toast_copy_success: "Email address copied to clipboard!",
+        toast_copy_failed: "Failed to copy email",
+        footer_text: "© 2026 Shinta Lestari • Professional Curriculum Vitae"
+      }
+    };
+
+    // Current active language state
+    let currentLang = localStorage.getItem('cv_lang') || 'id';
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('cv_lang', lang);
+      document.documentElement.setAttribute('lang', lang);
+
+      // Update switcher buttons state
+      document.getElementById('btnLangId').classList.toggle('active', lang === 'id');
+      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+
+      // Update all data-i18n elements
+      const dict = translations[lang] || translations.id;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.textContent = dict[key];
+        }
+      });
+
+      // Update document title & meta description
+      document.title = dict.page_title;
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) metaDesc.setAttribute('content', dict.page_desc);
+
+      // Update tooltip attributes
+      document.getElementById('statusBadge').setAttribute('title', dict.badge_status);
+      document.getElementById('emailChip').setAttribute('title', dict.tip_email);
+      document.getElementById('waChip').setAttribute('title', dict.tip_wa);
+      document.getElementById('linkedinChip').setAttribute('title', dict.tip_linkedin);
+      document.getElementById('themeToggle').setAttribute('title', dict.ctrl_theme_title);
+      document.getElementById('footerText').textContent = dict.footer_text;
+    }
+
+    // Initialize language on load
+    switchLanguage(currentLang);
+
     // Theme Switcher (Dark / Light Mode)
     const htmlElement = document.documentElement;
     const themeToggleBtn = document.getElementById('themeToggle');
@@ -1799,19 +2144,23 @@
     }
 
     // Copy Text to Clipboard with Toast Notification
-    function copyText(text, label) {
+    function copyText(text, type) {
+      const dict = translations[currentLang] || translations.id;
+      const successMsg = type === 'email' ? dict.toast_copy_success : `${text} berhasil disalin!`;
+      const failMsg = type === 'email' ? dict.toast_copy_failed : `Gagal menyalin: ${text}`;
+
       if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(text).then(() => {
-          showToast(`${label || 'Teks'} berhasil disalin ke clipboard!`);
+          showToast(successMsg);
         }).catch(() => {
-          fallbackCopy(text, label);
+          fallbackCopy(text, successMsg, failMsg);
         });
       } else {
-        fallbackCopy(text, label);
+        fallbackCopy(text, successMsg, failMsg);
       }
     }
 
-    function fallbackCopy(text, label) {
+    function fallbackCopy(text, successMsg, failMsg) {
       const textarea = document.createElement('textarea');
       textarea.value = text;
       textarea.style.position = 'fixed';
@@ -1820,9 +2169,9 @@
       textarea.select();
       try {
         document.execCommand('copy');
-        showToast(`${label || 'Teks'} berhasil disalin ke clipboard!`);
+        showToast(successMsg);
       } catch (err) {
-        showToast(`Gagal menyalin: ${text}`);
+        showToast(failMsg);
       }
       document.body.removeChild(textarea);
     }
